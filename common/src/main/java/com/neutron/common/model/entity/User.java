@@ -15,9 +15,9 @@ import lombok.Data;
 @Data
 public class User implements Serializable {
     /**
-     * 
+     * id
      */
-    @TableId(value = "id")
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     /**
@@ -36,7 +36,7 @@ public class User implements Serializable {
      * 密码
      */
     @TableField(value = "password")
-    private Integer password;
+    private String password;
 
     /**
      * 创建时间

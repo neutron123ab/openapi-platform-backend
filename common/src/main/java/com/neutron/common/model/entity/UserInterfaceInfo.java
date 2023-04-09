@@ -8,6 +8,7 @@ import lombok.Data;
 
 /**
  * 用户调用接口关系表
+ * @author zzs
  * @TableName user_interface_info
  */
 @TableName(value ="user_interface_info")

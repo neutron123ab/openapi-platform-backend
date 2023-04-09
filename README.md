@@ -100,3 +100,12 @@ create table user_interface_info
     comment '用户调用接口关系表';
 ```
 
+## 接口设计
+
+### 1、登录
+
+### 2、注册
+
+注册时通过 redis 生成分布式id
+
+### 3、

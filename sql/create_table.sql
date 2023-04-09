@@ -1,11 +1,11 @@
 -- 用户表
 create table user
 (
-    id          bigint                             not null
+    id          bigint                             not null auto_increment
         primary key,
     username    varchar(256)                       null comment '用户名',
     account     varchar(256)                       not null comment '账号',
-    password    int                                null comment '密码',
+    password    VARCHAR(256)                                null comment '密码',
     create_time datetime default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '创建时间',
     update_time datetime default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '更新时间',
     is_delete   tinyint  default 0                 not null comment '是否删除',
