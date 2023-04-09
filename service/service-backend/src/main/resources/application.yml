@@ -1,0 +1,17 @@
+server:
+    port: 8081
+spring:
+    application:
+        name: nacos-service
+    cloud:
+        nacos:
+            discovery:
+                namespace: public
+                password: nacos
+                server-addr: localhost:8848
+                username: nacos
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        username: root
+        password: 137911
+        url: jdbc:mysql://localhost:3306/openapi
