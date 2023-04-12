@@ -1,0 +1,6 @@
+openapi:
+  client:
+    access-key: 1
+    secret-key: 1
+server:
+  port: 8082

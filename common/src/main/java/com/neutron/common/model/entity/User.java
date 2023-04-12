@@ -63,6 +63,18 @@ public class User implements Serializable {
     @TableField(value = "user_role")
     private Integer userRole;
 
+    /**
+     * 用户标识
+     */
+    @TableField(value = "access_key")
+    private String accessKey;
+
+    /**
+     * 用户秘钥
+     */
+    @TableField(value = "secret_key")
+    private String secretKey;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

@@ -1,0 +1,36 @@
+server:
+  port: 8000
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        username: nacos
+        password: nacos
+    gateway:
+      enabled: true
+      routes:
+        - id: service-backend
+          uri: lb://service-backend
+          predicates:
+            - Path=/api/**
+
+dubbo:
+  registry:
+    id: nacos-registry
+    address: nacos://localhost:8848
+  application:
+    name: dubbo-springboot-demo-provider
+  protocol:
+    name: dubbo
+    port: -1
+
+logging:
+  level:
+    org:
+      springframework:
+        cloud:
+          gateway: trace

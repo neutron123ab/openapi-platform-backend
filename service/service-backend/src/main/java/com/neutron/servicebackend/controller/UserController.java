@@ -9,7 +9,6 @@ import com.neutron.common.response.BaseResponse;
 import com.neutron.common.response.ErrorCode;
 import com.neutron.common.response.ResultUtils;
 import com.neutron.servicebackend.service.UserService;
-import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+
+import static com.neutron.common.constants.UserConstants.USER_LOGIN_STATE;
 
 /**
  * 用户模块
@@ -65,6 +66,21 @@ public class UserController {
             throw new BusinessException(ErrorCode.SYSTEM_ERROR, "登录失败");
         }
         return ResultUtils.success(userDTO, "登录成功");
+    }
+
+    /**
+     * 退出登录接口
+     *
+     * @param request servlet
+     * @return 是否退出登录成功
+     */
+    @PostMapping("/logout")
+    public BaseResponse<Boolean> userLogout(HttpServletRequest request) {
+        if (request == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        request.getSession().removeAttribute(USER_LOGIN_STATE);
+        return ResultUtils.success(true);
     }
 
 }

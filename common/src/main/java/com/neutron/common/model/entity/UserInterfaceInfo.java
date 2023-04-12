@@ -33,7 +33,7 @@ public class UserInterfaceInfo implements Serializable {
     private Long interfaceId;
 
     /**
-     * 该用户可调用次数
+     * 该用户总计调用次数
      */
     @TableField(value = "total_num")
     private Integer totalNum;

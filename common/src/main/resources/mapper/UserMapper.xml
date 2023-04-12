@@ -13,11 +13,14 @@
             <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
             <result property="isDelete" column="is_delete" jdbcType="TINYINT"/>
             <result property="userRole" column="user_role" jdbcType="TINYINT"/>
+            <result property="accessKey" column="access_key" jdbcType="VARCHAR"/>
+            <result property="secretKey" column="secret_key" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id,username,account,
         password,create_time,update_time,
-        is_delete,user_role
+        is_delete,user_role,
+        accessKey, secretKey
     </sql>
 </mapper>
