@@ -1,0 +1,29 @@
+server:
+    port: 8083
+    servlet:
+        context-path: /api/manager
+spring:
+    application:
+        name: service-manager
+    session:
+        store-type: redis
+        timeout: 86400
+    redis:
+        host: localhost
+        port: 6379
+        database: 0
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        username: root
+        password: 137911
+        url: jdbc:mysql://localhost:3306/openapi
+    jackson:
+        date-format: yyyy-MM-dd HH:mm:ss
+        time-zone: GMT+8
+    cloud:
+        nacos:
+            discovery:
+                namespace: public
+                password: nacos
+                server-addr: localhost:8848
+                username: nacos

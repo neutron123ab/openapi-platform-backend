@@ -3,9 +3,9 @@ package com.neutron.servicebackend.service.impl.dubbo;
 import cn.hutool.core.text.CharSequenceUtil;
 import com.neutron.common.exception.BusinessException;
 import com.neutron.common.model.entity.InterfaceInfo;
-import com.neutron.servicebackend.service.InterfaceInfoService;
 import com.neutron.common.response.ErrorCode;
 import com.neutron.common.service.DubboInterfaceService;
+import com.neutron.servicebackend.service.InterfaceInfoService;
 import org.apache.dubbo.config.annotation.DubboService;
 
 import javax.annotation.Resource;

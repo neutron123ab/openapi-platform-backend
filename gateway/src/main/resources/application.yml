@@ -2,6 +2,13 @@ server:
   port: 8000
 
 spring:
+  session:
+    store-type: redis
+    timeout: 86400
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
   application:
     name: gateway
   cloud:
@@ -16,7 +23,11 @@ spring:
         - id: service-backend
           uri: lb://service-backend
           predicates:
-            - Path=/api/**
+            - Path=/api/backend/**
+        - id: service-manager
+          uri: lb://service-manager
+          predicates:
+            - Path=/api/manager/**
 
 dubbo:
   registry:

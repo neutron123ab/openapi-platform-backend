@@ -135,3 +135,57 @@ create table user_interface_info
 ### 统一日志处理
 
 设置两个全局过滤器，一个用于对所有经过网关的请求进行校验并在其中打印请求日志，另一个用于打印响应日志同时完成用户接口调用计数的操作
+
+### 分布式session
+
+在登录之后，系统会在redis中存储session，但只有登录功能所在的那个模块能够使用这个session，要向让其他模块也能共享这个session，就要在每个模块中都添加一个启动session共享的配置文件。
+
+**服务模块**
+
+```java
+@Configuration
+@EnableRedisHttpSession
+public class SessionConfig {
+}
+```
+
+**网关模块**
+
+但由于在spring cloud gateway中使用的是非阻塞的WebFlux，所以需要使用`@EnableRedisWebSession`注解，并且需要使用Base64编码覆盖WebSession中读取sessionId的写法，否则sessionId传到下游时会不一致。
+
+```java
+@Slf4j
+@Configuration
+@EnableRedisWebSession
+public class SessionConfig {
+    @Bean
+    public WebSessionIdResolver webSessionIdResolver() {
+        return new CustomWebSessionIdResolver();
+    }
+
+    private static class CustomWebSessionIdResolver extends CookieWebSessionIdResolver {
+        // 重写resolve方法 对SESSION进行base64解码
+        @Override
+        public List<String> resolveSessionIds(ServerWebExchange exchange) {
+            MultiValueMap<String, HttpCookie> cookieMap = exchange.getRequest().getCookies();
+            // 获取SESSION
+            List<HttpCookie> cookies = cookieMap.get(getCookieName());
+            if (cookies == null) {
+                return Collections.emptyList();
+            }
+            return cookies.stream().map(HttpCookie::getValue).map(this::base64Decode).collect(Collectors.toList());
+        }
+
+        private String base64Decode(String base64Value) {
+            try {
+                byte[] decodedCookieBytes = Base64.getDecoder().decode(base64Value);
+                return new String(decodedCookieBytes);
+            } catch (Exception ex) {
+                log.debug("Unable to Base64 decode value: " + base64Value);
+                return null;
+            }
+        }
+    }
+}
+```
+

@@ -160,6 +160,7 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
         List<String> ignorePaths = new ArrayList<>();
         ignorePaths.add("/**/user/**");
         ignorePaths.add("/**/interface/**");
+        ignorePaths.add("/**/manager/**");
 
         for (String ignorePath : ignorePaths) {
             if (antPathMatcher.match(ignorePath, path)) {
