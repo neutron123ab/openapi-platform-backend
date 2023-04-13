@@ -13,8 +13,8 @@
 ### 前端
 
 * Vue3
-* vben-admin
-* ant-design-vue
+* pure-admin
+* element-plus
 * echarts
 
 ### 后端
@@ -106,9 +106,25 @@ create table user_interface_info
 
 ### 2、注册
 
+### 3、管理员上传接口
+
+### 4、管理员修改接口信息
+
+### 5、获取所有上线的接口信息
+
+根据userId查询用户表，判断是否为管理员，如果是管理员，则展示出所有的接口信息；如果只是普通用户，则只展示出已上线的接口信息。
+
+### 6、用户申请签名
+
+在用户使用SDK调用接口时，需要再请求中携带签名。为了确保安全，需要保证该签名只能被生成一次，用户下一次调用该接口时会覆盖掉以前的前面，同时修改数据库中的内容。
+
+### 7、用户在线调试接口
+
+用户在请求中传递
+
 ## SDK 开发
 
-为了方便用户调用线上接口，这里开发了SDK，只需一行代码即可完成对数据的签名和接口的调用。用户调用相应方法后会得到json形式的响应结果，用户需要自己接口文档进行json解析。
+为了方便用户调用线上接口，这里开发了SDK，只需一行代码即可完成对数据的签名和接口的调用。用户调用相应方法后会得到json形式的响应结果，用户需要自己根据接口文档进行json解析。
 
 ## 网关
 
@@ -136,9 +152,9 @@ create table user_interface_info
 
 设置两个全局过滤器，一个用于对所有经过网关的请求进行校验并在其中打印请求日志，另一个用于打印响应日志同时完成用户接口调用计数的操作
 
-### 分布式session
+### 分布式session共享
 
-在登录之后，系统会在redis中存储session，但只有登录功能所在的那个模块能够使用这个session，要向让其他模块也能共享这个session，就要在每个模块中都添加一个启动session共享的配置文件。
+在登录之后，系统会在redis中存储session，但只有登录功能所在的那个模块能够使用这个session，要想让其他模块也能共享这个session，就要在每个模块中都添加一个启动session共享的配置文件。
 
 **服务模块**
 
@@ -151,7 +167,7 @@ public class SessionConfig {
 
 **网关模块**
 
-但由于在spring cloud gateway中使用的是非阻塞的WebFlux，所以需要使用`@EnableRedisWebSession`注解，并且需要使用Base64编码覆盖WebSession中读取sessionId的写法，否则sessionId传到下游时会不一致。
+由于在spring cloud gateway中使用的是非阻塞的WebFlux，所以需要使用`@EnableRedisWebSession`注解，并且需要使用Base64编码覆盖WebSession中读取sessionId的写法，否则sessionId传到下游时会不一致。
 
 ```java
 @Slf4j

@@ -5,14 +5,12 @@ import com.neutron.common.exception.BusinessException;
 import com.neutron.common.model.dto.UserDTO;
 import com.neutron.common.model.request.UserLoginRequest;
 import com.neutron.common.model.request.UserRegisterRequest;
+import com.neutron.common.model.vo.KeysVO;
 import com.neutron.common.response.BaseResponse;
 import com.neutron.common.response.ErrorCode;
 import com.neutron.common.response.ResultUtils;
 import com.neutron.servicebackend.service.UserService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -81,6 +79,22 @@ public class UserController {
         }
         request.getSession().removeAttribute(USER_LOGIN_STATE);
         return ResultUtils.success(true);
+    }
+
+    /**
+     * 用户申请密钥
+     *
+     * @return 密钥对
+     */
+    @GetMapping("/getSecretKey")
+    public BaseResponse<KeysVO> getSecretKey(HttpServletRequest request) {
+        UserDTO loginUser = (UserDTO) request.getSession().getAttribute(USER_LOGIN_STATE);
+        if (loginUser == null) {
+            throw new BusinessException(ErrorCode.NOT_LOGIN);
+        }
+        Long userId = loginUser.getId();
+        KeysVO keysVO = userService.getKeys(userId);
+        return ResultUtils.success(keysVO);
     }
 
 }

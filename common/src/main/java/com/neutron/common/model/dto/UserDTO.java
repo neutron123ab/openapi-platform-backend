@@ -32,6 +32,11 @@ public class UserDTO implements Serializable {
      */
     private Date createTime;
 
+    /**
+     * 用户标识
+     */
+    private String accessKey;
+
 
     /**
      * 用户角色（0-普通用户，1-管理员）

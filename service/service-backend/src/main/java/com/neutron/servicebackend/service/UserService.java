@@ -1,10 +1,11 @@
 package com.neutron.servicebackend.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.neutron.common.model.dto.UserDTO;
 import com.neutron.common.model.entity.User;
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.neutron.common.model.request.UserLoginRequest;
 import com.neutron.common.model.request.UserRegisterRequest;
+import com.neutron.common.model.vo.KeysVO;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,7 +20,7 @@ public interface UserService extends IService<User> {
      * 用户登录接口
      *
      * @param userLoginRequest 用户登录请求实体
-     * @param request servlet请求
+     * @param request          servlet请求
      * @return 用户信息
      */
     UserDTO userLogin(UserLoginRequest userLoginRequest, HttpServletRequest request);
@@ -31,5 +32,13 @@ public interface UserService extends IService<User> {
      * @return 是否注册成功
      */
     Boolean userRegister(UserRegisterRequest userRegisterRequest);
+
+    /**
+     * 用户申请accessKey 和 secretKey
+     *
+     * @param userId 用户id
+     * @return 保存了accessKey 和 secretKey的map
+     */
+    KeysVO getKeys(Long userId);
 
 }

@@ -3,7 +3,6 @@ package com.neutron.servicebackend.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.crypto.SecureUtil;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.neutron.common.exception.BusinessException;
 import com.neutron.common.model.dto.UserDTO;
@@ -11,12 +10,12 @@ import com.neutron.common.model.entity.User;
 import com.neutron.common.model.mapper.UserMapper;
 import com.neutron.common.model.request.UserLoginRequest;
 import com.neutron.common.model.request.UserRegisterRequest;
+import com.neutron.common.model.vo.KeysVO;
 import com.neutron.common.response.ErrorCode;
 import com.neutron.servicebackend.service.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -120,6 +119,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         }
 
         return true;
+    }
+
+    @Override
+    public KeysVO getKeys(Long userId) {
+        String accessKey = IdUtil.fastSimpleUUID();
+        String secretKey = IdUtil.fastSimpleUUID();
+        KeysVO keysVO = new KeysVO();
+        keysVO.setAccessKey(accessKey);
+        keysVO.setSecretKey(secretKey);
+        boolean update = update().eq("id", userId)
+                .set("access_key", accessKey)
+                .set("secret_key", secretKey)
+                .update();
+        if (!update) {
+            throw new BusinessException(ErrorCode.SYSTEM_ERROR, "更新用户秘钥失败");
+        }
+        return keysVO;
     }
 
 

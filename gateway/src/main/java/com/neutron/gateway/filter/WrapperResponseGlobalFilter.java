@@ -4,8 +4,6 @@ import cn.hutool.core.text.CharSequenceUtil;
 import com.alibaba.nacos.shaded.com.google.common.base.Joiner;
 import com.alibaba.nacos.shaded.com.google.common.base.Throwables;
 import com.alibaba.nacos.shaded.com.google.common.collect.Lists;
-import com.neutron.common.exception.BusinessException;
-import com.neutron.common.response.ErrorCode;
 import com.neutron.common.service.DubboUserInterfaceService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
@@ -69,11 +67,11 @@ public class WrapperResponseGlobalFilter implements GlobalFilter, Ordered {
                             });
                             String userId = originalResponse.getHeaders().getFirst("userId");
                             String interfaceId = originalResponse.getHeaders().getFirst("interfaceId");
+                            //当用户使用sdk调用接口时才执行下面的方法
                             try {
-                                if (userId == null || interfaceId == null) {
-                                    throw new BusinessException(ErrorCode.SYSTEM_ERROR, "没有获取到用户id和接口id");
+                                if (userId != null && interfaceId != null) {
+                                    dubboUserInterfaceService.addInvokeNum(Long.parseLong(interfaceId), Long.parseLong(userId));
                                 }
-                                dubboUserInterfaceService.addInvokeNum(Long.parseLong(interfaceId), Long.parseLong(userId));
                             } catch (Exception e) {
                                 log.error("远程调用增加接口调用次数的方法失败", e);
                             }
