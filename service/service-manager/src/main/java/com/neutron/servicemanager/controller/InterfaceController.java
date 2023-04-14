@@ -1,6 +1,8 @@
 package com.neutron.servicemanager.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.neutron.common.exception.BusinessException;
+import com.neutron.common.model.dto.InterfaceInfoDTO;
 import com.neutron.common.model.dto.UserDTO;
 import com.neutron.common.model.enums.UserRoleEnum;
 import com.neutron.common.model.request.AddInterfaceRequest;
@@ -71,10 +73,20 @@ public class InterfaceController {
         return ResultUtils.success(true, "更新接口信息成功");
     }
 
-    @GetMapping("/getSession")
-    public BaseResponse<String> getSession(HttpServletRequest request) {
-        String s = request.getSession().getAttribute(USER_LOGIN_STATE).toString();
-        return ResultUtils.success(s);
+    /**
+     * 管理员分页查询所有接口信息
+     * @param current 当前页
+     * @param pageSize 页大小
+     * @return 页面信息
+     */
+    @GetMapping("/getAllInterfaceInfo")
+    public BaseResponse<IPage<InterfaceInfoDTO>> getAllInterfaceInfo(Long current, Long pageSize) {
+        if (current == null || pageSize == null) {
+            throw new BusinessException(ErrorCode.NULL_ERROR);
+        }
+        IPage<InterfaceInfoDTO> allInterfaceInfo = interfaceInfoService.getAllInterfaceInfo(current, pageSize);
+
+        return ResultUtils.success(allInterfaceInfo, "请求成功");
     }
 
 }

@@ -17,4 +17,12 @@ public interface DubboInterfaceService {
      */
     InterfaceInfo getInterfaceInfo(String url, String method);
 
+    /**
+     * 接口总调用次数加1
+     *
+     * @param interfaceId 接口id
+     * @return 是否修改成功
+     */
+    Boolean addTotalInvoke(Long interfaceId);
+
 }

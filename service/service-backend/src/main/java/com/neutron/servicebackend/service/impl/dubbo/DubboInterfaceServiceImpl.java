@@ -20,12 +20,20 @@ public class DubboInterfaceServiceImpl implements DubboInterfaceService {
     @Resource
     private InterfaceInfoService interfaceInfoService;
 
-
     @Override
     public InterfaceInfo getInterfaceInfo(String url, String method) {
         if(CharSequenceUtil.hasBlank(url, method)) {
             throw new BusinessException(ErrorCode.NULL_ERROR);
         }
         return interfaceInfoService.query().eq("url", url).eq("method", method).one();
+    }
+
+    @Override
+    public Boolean addTotalInvoke(Long interfaceId) {
+        if (interfaceId == null) {
+            throw new BusinessException(ErrorCode.NULL_ERROR);
+        }
+
+        return interfaceInfoService.addTotalInvoke(interfaceId);
     }
 }

@@ -1,6 +1,18 @@
 openapi:
   client:
-    access-key: 1
-    secret-key: 1
+    access-key: b559823a4f2943beab399a9c4534822d
+    secret-key: 14c9e385a36141ecade3e86cf55b4abe
 server:
   port: 8082
+  servlet:
+    context-path: /api/test
+spring:
+  application:
+    name: test-module
+  cloud:
+    nacos:
+      discovery:
+        namespace: public
+        password: nacos
+        server-addr: localhost:8848
+        username: nacos

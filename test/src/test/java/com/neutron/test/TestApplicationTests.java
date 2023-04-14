@@ -17,7 +17,7 @@ class TestApplicationTests {
     void contextLoads() {
         Request request = new Request();
         request.setUserAccount("neutron");
-        request.setUrl("localhost:8000/api/demo");
+        request.setUrl("localhost:8000/api/test/demo");
         request.setBody(null);
         String result = openApiClient.sendRequest(request);
         System.out.println("result = " + result);

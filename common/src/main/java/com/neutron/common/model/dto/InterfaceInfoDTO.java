@@ -66,4 +66,9 @@ public class InterfaceInfoDTO {
      */
     private Date updateTime;
 
+    /**
+     * 接口总调用次数
+     */
+    private Long total;
+
 }

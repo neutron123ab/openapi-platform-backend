@@ -28,6 +28,10 @@ spring:
           uri: lb://service-manager
           predicates:
             - Path=/api/manager/**
+        - id: test-module
+          uri: lb://test-module
+          predicates:
+            - Path=/api/test/**
 
 dubbo:
   registry:

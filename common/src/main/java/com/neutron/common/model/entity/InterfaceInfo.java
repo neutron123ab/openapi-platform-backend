@@ -1,10 +1,10 @@
 package com.neutron.common.model.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
 
 /**
  * 接口信息表
@@ -79,6 +79,12 @@ public class InterfaceInfo implements Serializable {
      */
     @TableField(value = "update_time")
     private Date updateTime;
+
+    /**
+     * 接口总调用次数
+     */
+    @TableField(value = "total")
+    private Long total;
 
     /**
      * 是否删除（0-未删除，1-已删除）
