@@ -53,12 +53,22 @@ public class OpenApiClient {
     public String sendRequest(Request request) {
         Gson gson = new Gson();
         String json = gson.toJson(request);
-        return HttpRequest.post(request.getUrl())
-                .header("Accept","application/json;charset=UTF-8")
-                .addHeaders(setHeaders(request, accessKey, secretKey))
-                .charset("UTF-8")
-                .body(json)
-                .execute().body();
+
+        if (compareMethod("GET", request.getMethod())) {
+            return HttpRequest.get(request.getUrl())
+                    .header("Accept","application/json;charset=UTF-8")
+                    .addHeaders(setHeaders(request, accessKey, secretKey))
+                    .charset("UTF-8")
+                    .body(json)
+                    .execute().body();
+        } else {
+            return HttpRequest.post(request.getUrl())
+                    .header("Accept","application/json;charset=UTF-8")
+                    .addHeaders(setHeaders(request, accessKey, secretKey))
+                    .charset("UTF-8")
+                    .body(json)
+                    .execute().body();
+        }
     }
 
     /**
@@ -78,6 +88,16 @@ public class OpenApiClient {
         map.put("body", gson.toJson(request.getBody()));
         map.put("timestamp", String.valueOf(System.currentTimeMillis()));
         return map;
+    }
+
+    /**
+     * 比较请求方法
+     * @param method1
+     * @param method2
+     * @return
+     */
+    private boolean compareMethod(String method1, String method2) {
+        return method1.equalsIgnoreCase(method2);
     }
 
 }

@@ -39,6 +39,16 @@ public class AddInterfaceRequest implements Serializable {
     private String responseHeader;
 
     /**
+     * 请求参数
+     */
+    private String paramsList;
+
+    /**
+     * 响应参数
+     */
+    private String responseParamsList;
+
+    /**
      * 接口状态（0-关闭，1-开启）
      */
     private Integer status;

@@ -23,7 +23,7 @@ import static com.neutron.common.constants.UserConstants.USER_LOGIN_STATE;
  * @date 2023/4/9 16:52
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/backend/user")
 public class UserController {
 
     @Resource

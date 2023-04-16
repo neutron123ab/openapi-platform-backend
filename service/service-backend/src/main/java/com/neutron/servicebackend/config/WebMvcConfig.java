@@ -23,8 +23,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         List<String> ignorePaths = new ArrayList<>();
-        ignorePaths.add("/user/login");
-        ignorePaths.add("/user/register");
+        ignorePaths.add("/backend/user/login");
+        ignorePaths.add("/backend/user/register");
         registry.addInterceptor(loginInterceptor)
                 .addPathPatterns("/**")
                 .excludePathPatterns(ignorePaths);

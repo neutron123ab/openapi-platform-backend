@@ -1,8 +1,10 @@
 package com.neutron.common.model.dto;
 
+import com.neutron.common.model.entity.Params;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author zzs
@@ -30,6 +32,16 @@ public class InterfaceInfoDTO {
      * 接口地址
      */
     private String url;
+
+    /**
+     * 请求参数
+     */
+    private List<Params> paramsList;
+
+    /**
+     * 响应参数
+     */
+    private List<Params> responseParamsList;
 
     /**
      * 请求头

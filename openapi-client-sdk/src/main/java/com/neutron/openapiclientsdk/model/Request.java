@@ -25,6 +25,11 @@ public class Request implements Serializable {
     private String url;
 
     /**
+     * 请求方法
+     */
+    private String method;
+
+    /**
      * 请求体
      */
     private Object body;

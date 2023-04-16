@@ -5,9 +5,12 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.neutron.common.exception.BusinessException;
 import com.neutron.common.model.dto.InterfaceInfoDTO;
 import com.neutron.common.model.entity.InterfaceInfo;
+import com.neutron.common.model.entity.Params;
 import com.neutron.common.model.enums.InterfaceStatusEnum;
 import com.neutron.common.model.mapper.InterfaceInfoMapper;
 import com.neutron.common.response.ErrorCode;
@@ -19,6 +22,7 @@ import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -46,7 +50,20 @@ public class InterfaceInfoServiceImpl extends ServiceImpl<InterfaceInfoMapper, I
         QueryWrapper<InterfaceInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("status", InterfaceStatusEnum.OPEN.getValue());
         Page<InterfaceInfo> page = page(new Page<>(current, pageSize), queryWrapper);
-        IPage<InterfaceInfoDTO> convert = page.convert(InterfaceInfo -> BeanUtil.copyProperties(InterfaceInfo, InterfaceInfoDTO.class));
+        IPage<InterfaceInfoDTO> convert = page.convert(interfaceInfo -> {
+            Gson gson = new Gson();
+            InterfaceInfoDTO interfaceInfoDTO = new InterfaceInfoDTO();
+            BeanUtil.copyProperties(interfaceInfo, interfaceInfoDTO);
+            String requestParams = interfaceInfo.getRequestParams();
+            String responseParamsJson = interfaceInfo.getResponseParams();
+            List<Params> params = gson.fromJson(requestParams, new TypeToken<List<Params>>() {
+            }.getType());
+            List<Params> responseParams = gson.fromJson(responseParamsJson, new TypeToken<List<Params>>() {
+            }.getType());
+            interfaceInfoDTO.setParamsList(params);
+            interfaceInfoDTO.setResponseParamsList(responseParams);
+            return interfaceInfoDTO;
+        });
         if (convert == null) {
             throw new BusinessException(ErrorCode.SYSTEM_ERROR, "分页查询已上线接口失败");
         }

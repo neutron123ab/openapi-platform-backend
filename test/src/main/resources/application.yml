@@ -5,7 +5,7 @@ openapi:
 server:
   port: 8082
   servlet:
-    context-path: /api/test
+    context-path: /api
 spring:
   application:
     name: test-module

@@ -2,6 +2,7 @@ package com.neutron.common.model.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
+import org.apache.ibatis.type.StringTypeHandler;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -92,6 +93,18 @@ public class InterfaceInfo implements Serializable {
     @TableField(value = "is_delete")
     @TableLogic
     private Integer isDelete;
+
+    /**
+     * 请求参数
+     */
+    @TableField(value = "request_params", typeHandler = StringTypeHandler.class)
+    private String requestParams;
+
+    /**
+     * 返回参数
+     */
+    @TableField(value = "response_params", typeHandler = StringTypeHandler.class)
+    private String responseParams;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

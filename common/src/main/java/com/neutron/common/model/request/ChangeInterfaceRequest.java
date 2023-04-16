@@ -1,8 +1,10 @@
 package com.neutron.common.model.request;
 
+import com.neutron.common.model.entity.Params;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author zzs
@@ -31,6 +33,16 @@ public class ChangeInterfaceRequest implements Serializable {
      * 接口地址
      */
     private String url;
+
+    /**
+     * 请求参数
+     */
+    private List<Params> paramsList;
+
+    /**
+     * 响应参数
+     */
+    private List<Params> responseParamsList;
 
     /**
      * 请求头

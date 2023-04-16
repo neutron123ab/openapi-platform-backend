@@ -24,7 +24,7 @@ import static com.neutron.common.constants.UserConstants.USER_LOGIN_STATE;
  * @date 2023/4/11 20:13
  */
 @RestController
-@RequestMapping("/interface")
+@RequestMapping("/manager/interface")
 public class InterfaceController {
 
     @Resource
