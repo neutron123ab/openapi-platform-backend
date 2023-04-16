@@ -126,7 +126,7 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
         Long interfaceId = interfaceInfo.getId();
         Boolean canInvoke = null;
         try {
-            canInvoke = dubboUserInterfaceService.getLeftInvokeNums(userId, interfaceId);
+            canInvoke = dubboUserInterfaceService.getLeftInvokeNums(interfaceId, userId);
         } catch (Exception e) {
             log.error("远程调用接口计数服务失败", e);
         }
