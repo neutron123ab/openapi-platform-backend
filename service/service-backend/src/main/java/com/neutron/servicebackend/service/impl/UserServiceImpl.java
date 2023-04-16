@@ -117,6 +117,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         if(!save) {
             throw new BusinessException(ErrorCode.SYSTEM_ERROR, "注册用户失败");
         }
+        Long userId = user.getId();
+        //用户注册的同时创建秘钥
+        KeysVO keys = getKeys(userId);
+        if (keys == null) {
+            throw new BusinessException(ErrorCode.NULL_ERROR);
+        }
 
         return true;
     }
